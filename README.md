@@ -7,9 +7,9 @@
 
 ## Install
 ```
-doas mkdir -p /var/www/htdocs/resolvarr/
-doas cp resolvarr /usr/local/bin/
-doas chmod +x /usr/local/bin/resolvarr
+doas mkdir -p /var/www/htdocs/lookupd/
+doas cp lookupd /usr/local/bin/
+doas chmod +x /usr/local/bin/lookupd
 ```
 
 ## Configure
@@ -22,6 +22,6 @@ www.golem.de
 ## Usage
 It needs a output directory to write to
 
-`resolvarr /var/www/htdocs/resolvarr`
+`lookupd /var/www/htdocs/resolvarr`
 
 It creates [hostname].ips files
