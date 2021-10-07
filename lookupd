@@ -1,0 +1,23 @@
+#hn=$1
+#of=/tmp/$1.temp
+#results=$(host $hn)
+#echo "$results"                             # in quotes to retain newline
+conf=/etc/lookupd.conf
+outdir=$1
+
+for hn in $(cat $conf); do
+  of=/tmp/$hn.temp
+  results=$(host $hn)
+
+  for result in "$results"; do \
+    echo "$result" \
+    | grep -v "an alias" \
+    | grep -v SERVFAIL \
+    | grep -v "mail is handled" \
+    | rev | cut -d' ' -f1 | rev >> $of ; \
+  done
+
+  cat $of | sort -n | uniq > $outdir/$hn.ips
+  rm $of
+
+done
