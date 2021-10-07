@@ -14,10 +14,11 @@ doas chmod +x /usr/local/bin/lookupd
 
 ## Configure
 Put some hosts in /etc/resolvarr.conf
+```
 www.schmidbauer.cz
 www.heise.de
 www.golem.de
-
+```
 
 ## Usage
 It needs a output directory to write to
