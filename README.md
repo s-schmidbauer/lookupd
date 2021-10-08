@@ -26,12 +26,23 @@ It needs a output directory to write to
 where it creates [hostname].ips files
 
 ## Want to submit a host?
-Send an email to stefan [at] schmidbauer.cz with subject `lookupd add [HOST]`
+* Send an email to stefan [at] schmidbauer.cz with subject `lookupd add [HOST]`
+* Pull the repo. Add hosts to lookupd.conf . Submit a merge request on GitHub
 
 ## And now?
 Download the IP lists and use them for your purposes
 ```
 wget https://lookup.schmidbauer.cz/schmidbauer.cz.ips -O /etc/pf.blocklist.schmidbauer.cz.ips
+```
+
+Every minute, lookupd runs and creates fresh files
+```
+* * * * *       /usr/local/bin/lookupd /var/www/htdocs/lookupd
+```
+
+Every hour, a new list is pulled from GitHub
+```
+@hourly         cd /var/www/htdocs/lookupd/ && git pull && cp lookupd.conf /etc/lookupd.conf
 ```
 
 ### Github
