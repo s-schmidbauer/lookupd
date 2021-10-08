@@ -13,7 +13,7 @@ doas chmod +x /usr/local/bin/lookupd
 ```
 
 ## Configure
-Put some hosts in /etc/resolvarr.conf
+Put some hosts in /etc/lookupd.conf
 ```
 www.schmidbauer.cz
 www.heise.de
