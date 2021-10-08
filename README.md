@@ -13,21 +13,26 @@ doas chmod +x /usr/local/bin/lookupd
 ```
 
 ## Configure
-Put some hosts in /etc/lookupd.conf
+Put some hosts in /etc/lookupd.hosts.conf
 ```
 www.schmidbauer.cz
 www.heise.de
 www.golem.de
 ```
+Put some TXT records in /etc/lookupd.records.conf
+```
+_netblocks.google.com
+```
+Put some URLs to JSON in /etc/lookupd.urls.conf
 
 ## Usage
 It needs a output directory to write to
 `lookupd /var/www/htdocs/lookupd`
 where it creates [hostname].ips files
 
-## Want to submit a host?
+## Want to submit a host / record / URL?
 * Send an email to stefan [at] schmidbauer.cz with subject `lookupd add [HOST]`
-* Pull the repo. Add hosts to lookupd.conf . Submit a merge request on GitHub
+* Pull the repo. Add line to the appropriate config . Submit a merge request on GitHub
 
 ## And now?
 Download the IP lists and use them for your purposes
@@ -47,7 +52,4 @@ Every hour, a new list is pulled from GitHub
 
 ### Github
 https://github.com/s-schmidbauer/lookupd
-
-
-
 
