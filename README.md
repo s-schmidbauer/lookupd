@@ -42,7 +42,7 @@ Every minute, lookupd runs and creates fresh files
 
 Every hour, a new list is pulled from GitHub
 ```
-@hourly         cd /var/www/htdocs/lookupd/ && git pull && cp lookupd.conf /etc/lookupd.conf
+@hourly         cd /var/www/htdocs/lookupd/ && /usr/local/bin/git pull && /bin/cp lookupd.conf /etc/lookupd.conf
 ```
 
 ### Github
