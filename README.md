@@ -23,6 +23,6 @@ www.golem.de
 ## Usage
 It needs a output directory to write to
 
-`lookupd /var/www/htdocs/resolvarr`
+`lookupd /var/www/htdocs/lookupd`
 
 It creates [hostname].ips files
