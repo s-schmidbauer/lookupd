@@ -6,6 +6,7 @@
 
 ## Install
 ```
+doas pkg_add jq
 doas mkdir -p /var/www/htdocs/lookupd/
 doas cp lookupd /usr/local/bin/
 doas chmod +x /usr/local/bin/lookupd
