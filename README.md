@@ -22,7 +22,11 @@ Put some TXT records in /etc/lookupd.records.conf
 ```
 _netblocks.google.com
 ```
-Put some URLs to JSON in /etc/lookupd.urls.conf
+Put some URLs to JSON in /etc/lookupd.urls.conf .. along with a JQ selector to grab the data you need, separated by a semicolon (`;`)
+```
+https://www.gstatic.com/ipranges/goog.json;.prefixes[].ipv4Prefix
+```
+
 
 ## Usage
 It needs a output directory to write to
@@ -46,7 +50,7 @@ Every minute, lookupd runs and creates fresh files
 
 Every hour, a new list is pulled from GitHub
 ```
-@hourly         cd /var/www/htdocs/lookupd/ && /usr/local/bin/git pull && /bin/cp lookupd.conf /etc/lookupd.conf
+@hourly         cd /var/www/htdocs/lookupd/ && /usr/local/bin/git pull && /bin/cp lookupd.*.conf /etc/
 ```
 
 ### Github
