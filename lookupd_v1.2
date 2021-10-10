@@ -1,0 +1,61 @@
+#echo "$results"                             # in quotes to retain newline
+
+conf1=/etc/lookupd.hosts.conf
+conf2=/etc/lookupd.records.conf
+conf3=/etc/lookupd.urls.conf
+
+outdir=$1
+
+#parse hostnames
+for hn in $(cat $conf1); do
+  of=/tmp/$hn.temp
+  results=$(host $hn)
+
+  for result in "$results"; do \
+    echo "$result" \
+    | grep -v "an alias" \
+    | grep -v SERVFAIL \
+    | grep -v "mail is handled" \
+    | rev | cut -d' ' -f1 | rev >> $of ; \
+  done
+
+  cat $of | sort -n | uniq > $outdir/$hn.ip
+  rm $of
+done
+
+#parse DNS TXT records
+for rec in $(cat $conf2); do
+  of=/tmp/$rec.temp
+  results=$(dig -t TXT $rec +short)
+
+  for result in $(echo "$results" | tr '\' '\n'); do \
+    echo "$result" \
+    | grep -v "=" \
+    | grep -v "~" \
+    | cut -d':' -f2 >> $of ; \
+  done
+
+  cat $of | sort -n | uniq > $outdir/$rec.ip
+  rm $of
+done
+
+#parse json from URLs
+#count=0
+for url in $(cat $conf3); do
+  addr=$(echo $url | cut -f1 -d';')
+  hn=$(echo $url | cut -f1 -d';' | awk -F/ '{print $3}')
+  jqs=$(echo $url | cut -f2 -d';')	# jq selector
+  pf=$(echo $url | cut -f3 -d';')	# file postfix
+  of=/tmp/$hn.temp
+  #echo $hn
+  results=$(curl -s $addr | jq -r $(echo "$jqs"))
+
+  #count=$(expr $count + 1)
+
+  for result in $results; do \
+    echo $result | grep -v 'null' >> $of ;
+  done
+
+  cat $of | sort -n | uniq > $outdir/$hn.ip$pf
+  rm $of
+done

@@ -23,10 +23,19 @@ Put some TXT records in /etc/lookupd.records.conf
 ```
 _netblocks.google.com
 ```
-Put some URLs to JSON in /etc/lookupd.urls.conf .. along with a JQ selector to grab the data you need, separated by a semicolon (`;`)
+Put some URLs to JSON in /etc/lookupd.urls.conf 
+* along with a JQ selector to grab the data you need, 
+* and a postfix for your filename like region, site etc.
+* .. all separated by a semicolon (`;`)
 ```
-https://www.gstatic.com/ipranges/goog.json;.prefixes[].ipv4Prefix
+https://www.gstatic.com/ipranges/goog.json;.prefixes[].ipv4Prefix;ipv4
 ```
+
+## Output filename example
+
+basic name is HOSTNAME.ip
+when a postifix is given, it's HOSTNAME.ipPOSTFIX
+`ip-ranges.amazonaws.com.ipv4`
 
 
 ## Usage
