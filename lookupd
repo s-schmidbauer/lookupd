@@ -19,7 +19,7 @@ for hn in $(cat $conf1); do
     | rev | cut -d' ' -f1 | rev >> $of ; \
   done
 
-  cat $of | sort -n | uniq > $outdir/$hn.ips
+  cat $of | sort -n | uniq > $outdir/$hn.ip
   rm $of
 done
 
@@ -35,22 +35,27 @@ for rec in $(cat $conf2); do
     | cut -d':' -f2 >> $of ; \
   done
 
-  cat $of | sort -n | uniq > $outdir/$rec.ips
+  cat $of | sort -n | uniq > $outdir/$rec.ip
   rm $of
 done
 
 #parse json from URLs
+#count=0
 for url in $(cat $conf3); do
   addr=$(echo $url | cut -f1 -d';')
   hn=$(echo $url | cut -f1 -d';' | awk -F/ '{print $3}')
   jqs=$(echo $url | cut -f2 -d';')	# jq selector
+  pf=$(echo $url | cut -f3 -d';')	# file postfix
   of=/tmp/$hn.temp
-  results=$(curl -s $addr | jq -r $(echo $jqs))
+  #echo $hn
+  results=$(curl -s $addr | jq -r $(echo "$jqs"))
+
+  #count=$(expr $count + 1)
 
   for result in $results; do \
-    echo $result | grep -v 'null' >> $of
+    echo $result | grep -v 'null' >> $of ;
   done
 
-  cat $of | sort -n | uniq > $outdir/$hn.ips
+  cat $of | sort -n | uniq > $outdir/$hn.ip$pf
   rm $of
 done
